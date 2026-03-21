@@ -10,7 +10,7 @@ class Settings(BaseSettings):
     CATALOG_PATH: str = "./resources/data/CNE_IDEAM.csv"
     API_HOST: str = "0.0.0.0"
     API_PORT: int = 8000
-    CORS_ORIGINS: list[str] = ["http://localhost:3000", "http://localhost:5173"]
+    CORS_ORIGINS: list[str] = ["http://localhost:3000", "http://localhost:5173", "https://*.up.railway.app"]
     LOG_LEVEL: str = "info"
     ADMIN_KEY: str = "changeme"
 

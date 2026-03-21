@@ -2,9 +2,11 @@ import logging
 import subprocess
 import sys
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from fastapi import FastAPI, Header, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from app.config import get_settings
 from app.database import get_async_connection
@@ -42,6 +44,24 @@ app.add_middleware(
 
 app.include_router(stations.router)
 app.include_router(rainfall.router)
+
+# Serve frontend static files in production
+_static_dir = Path(__file__).resolve().parent.parent / "frontend" / "dist"
+if _static_dir.is_dir():
+    from starlette.responses import FileResponse
+
+    # Mount assets (JS/CSS/images) under /assets
+    app.mount("/assets", StaticFiles(directory=_static_dir / "assets"), name="assets")
+
+    # Serve favicon
+    @app.get("/favicon.svg", include_in_schema=False)
+    async def favicon():
+        return FileResponse(_static_dir / "favicon.svg")
+
+    # SPA fallback: serve index.html for all non-API routes
+    @app.get("/{full_path:path}", include_in_schema=False)
+    async def spa_fallback(full_path: str):
+        return FileResponse(_static_dir / "index.html")
 
 
 @app.get("/api/health", tags=["system"])
