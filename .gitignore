@@ -1,0 +1,15 @@
+data/pluvioapp.db
+data/pluvioapp.db-shm
+data/pluvioapp.db-wal
+resources/data/
+.env
+__pycache__/
+*.pyc
+.ruff_cache/
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+.venv/
+frontend/node_modules/
+frontend/dist/
