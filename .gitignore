@@ -1,6 +1,7 @@
 data/pluvioapp.db
 data/pluvioapp.db-shm
 data/pluvioapp.db-wal
+data/pluvioapp.db.zip
 resources/data/
 .env
 __pycache__/
@@ -13,3 +14,5 @@ build/
 .venv/
 frontend/node_modules/
 frontend/dist/
+.DS_Store
+.claude/
